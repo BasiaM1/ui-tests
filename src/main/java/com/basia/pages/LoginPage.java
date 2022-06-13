@@ -1,4 +1,4 @@
-package pages;
+package com.basia.pages;
 
 import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;

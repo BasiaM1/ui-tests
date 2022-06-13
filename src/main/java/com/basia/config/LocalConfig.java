@@ -11,4 +11,6 @@ import lombok.NoArgsConstructor;
 public class LocalConfig {
 
     String url;
+    String adminUsername;
+    String adminPassword;
 }
