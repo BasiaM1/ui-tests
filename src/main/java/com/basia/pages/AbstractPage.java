@@ -17,4 +17,8 @@ public abstract class AbstractPage {
         this.wait = new WebDriverWait(driver, Duration.of(5, ChronoUnit.SECONDS));
         PageFactory.initElements(driver, this);
     }
+
+    public WebDriver getDriver() {
+        return driver;
+    }
 }

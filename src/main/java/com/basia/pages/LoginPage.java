@@ -1,11 +1,14 @@
 package com.basia.pages;
 
+import lombok.Getter;
 import lombok.SneakyThrows;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+@Getter
 public class LoginPage extends AbstractPage {
 
     @FindBy(name = "username")
@@ -14,10 +17,10 @@ public class LoginPage extends AbstractPage {
     @FindBy(name = "password")
     private WebElement passwordField;
 
-    @FindBy(className = "btn-primary")
+    @FindBy(css = "button[class*='btn-primary']")
     private WebElement loginButton;
 
-    @FindBy(className = "btn-link")
+    @FindBy(css = "a[href='/register']")
     private WebElement registerButton;
 
     @FindBy(className = "alert")
@@ -44,5 +47,13 @@ public class LoginPage extends AbstractPage {
 
     public void verifyAlertMessageContains(String text) {
         wait.until(ExpectedConditions.textToBePresentInElement(alert, text));
+    }
+
+    public RegisterPage goToRegisterPage() {
+        registerButton.click();
+
+        wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("h2"), "Register"));
+
+        return new RegisterPage(getDriver());
     }
 }
