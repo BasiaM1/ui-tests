@@ -3,25 +3,25 @@ package com.basia.api;
 import com.basia.AbstractApi;
 import com.basia.api.dto.LoginDto;
 import com.basia.api.dto.LoginResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 
 import java.io.IOException;
 
+@Slf4j
 public class ApiLogin extends AbstractApi {
 
     public LoginResponseDto login(LoginDto loginDto) throws IOException {
         String json = objectMapper.writeValueAsString(loginDto);
-        System.out.println(json);
-        RequestBody body = RequestBody.create(json, JSON);
+        log.info(json);
         Request request = new Request.Builder()
                 .url("http://localhost:4001/users/signin")
-                .post(body)
+                .post(RequestBody.create(json, JSON))
                 .build();
-        try (Response response = client.newCall(request).execute()) {
-            String responseString = response.body().string();
-            System.out.println(objectMapper.readValue(responseString, LoginResponseDto.class));
-            return objectMapper.readValue(responseString, LoginResponseDto.class);
-        }
+        Response response = client.newCall(request).execute();
+        String responseString = response.body().string();
+        log.info(objectMapper.readValue(responseString, LoginResponseDto.class).toString());
+        return objectMapper.readValue(responseString, LoginResponseDto.class);
     }
 
 }
