@@ -1,6 +1,6 @@
 package com.basia.pages;
 
-import com.basia.api.dto.RegisterDto;
+import com.basia.api.dto.register.RegisterDto;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;

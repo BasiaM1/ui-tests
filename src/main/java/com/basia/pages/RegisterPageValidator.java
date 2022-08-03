@@ -2,10 +2,10 @@ package com.basia.pages;
 
 import com.basia.api.enums.Colors;
 import com.basia.helpers.ConstValues;
-import lombok.SneakyThrows;
-import org.assertj.core.api.Assertions;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RegisterPageValidator extends AbstractPageValidator<RegisterPage> {
 
@@ -14,7 +14,7 @@ public class RegisterPageValidator extends AbstractPageValidator<RegisterPage> {
     }
 
     public RegisterPageValidator assertErrorMessageForFieldIsDisplayed(String label) {
-        Assertions.assertThat(page.getErrorMessageForField(label).getText())
+        assertThat(page.getErrorMessageForField(label).getText())
                 .describedAs("Field %s should have error message but it hasn't", label)
                 .contains(ConstValues.FIELD_ERROR_MESSAGE);
 
@@ -22,7 +22,7 @@ public class RegisterPageValidator extends AbstractPageValidator<RegisterPage> {
     }
 
     public RegisterPageValidator assertFieldHasRedBorder(String label) {
-        Assertions.assertThat(getBorderColor(page.getField(label)))
+        assertThat(getBorderColor(page.getField(label)))
                 .describedAs("Field %s should have red border but it hasn't", label)
                 .isEqualTo(Colors.INPUT_VALIDATION_RED.getColor());
 

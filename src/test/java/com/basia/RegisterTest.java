@@ -1,6 +1,6 @@
 package com.basia;
 
-import com.basia.api.dto.RegisterDto;
+import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.enums.RegisterFields;
 import com.basia.helpers.ConstValues;
 import com.basia.pages.HomePage;

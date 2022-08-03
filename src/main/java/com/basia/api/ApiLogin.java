@@ -1,8 +1,8 @@
 package com.basia.api;
 
 import com.basia.AbstractApi;
-import com.basia.api.dto.LoginDto;
-import com.basia.api.dto.LoginResponseDto;
+import com.basia.api.dto.login.LoginDto;
+import com.basia.api.dto.login.LoginResponseDto;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 

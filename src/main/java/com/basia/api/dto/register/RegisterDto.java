@@ -1,19 +1,20 @@
-package com.basia.api.dto;
+package com.basia.api.dto.register;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 @Data
 @AllArgsConstructor
-public class LoginResponseDto {
+@NoArgsConstructor
+@Builder
+public class RegisterDto {
 
-    String username;
-    String token;
+    String email;
     String firstName;
     String lastName;
-    String email;
+    String password;
     Roles[] roles;
-
+    String username;
 }

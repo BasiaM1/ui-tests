@@ -1,16 +1,14 @@
 package com.basia;
 
-import com.basia.api.ApiLogin;
-import com.basia.api.dto.LoginDto;
-import com.basia.api.dto.LoginResponseDto;
+import com.basia.api.ApiRegister;
+import com.basia.api.dto.register.RegisterDto;
 import com.basia.helpers.ConstValues;
 import com.basia.pages.HomePage;
-import com.basia.pages.LoginPage;
 import lombok.SneakyThrows;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.basia.config.YamlParser.getConfig;
+import static com.basia.providers.UserProvider.getRandomUser;
 
 public class LoginTest extends BaseTest {
 
@@ -24,12 +22,13 @@ public class LoginTest extends BaseTest {
     @SneakyThrows
     @Test
     public void shouldBeAbleToLoginAsNewlyGeneratedUser() {
-        ApiLogin apiRegister = new ApiLogin();
-        LoginResponseDto loginResponseDto = apiRegister.login(new LoginDto("admin", "admin"));
+        ApiRegister apiRegister = new ApiRegister();
+        RegisterDto randomUser = getRandomUser();
+        apiRegister.register(randomUser);
 
         loginPage
-                .attemptLogin(getConfig().getAdminUsername(), getConfig().getAdminPassword(), HomePage.class)
-                .verifyHeaderContains("Slawomir");
+                .attemptLogin(randomUser.getUsername(), randomUser.getPassword(), HomePage.class)
+                .verifyHeaderContains(randomUser.getFirstName());
     }
 
     @Test

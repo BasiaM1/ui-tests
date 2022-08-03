@@ -1,7 +1,7 @@
 package com.basia.providers;
 
-import com.basia.api.dto.RegisterDto;
-import com.basia.api.dto.Roles;
+import com.basia.api.dto.register.RegisterDto;
+import com.basia.api.dto.register.Roles;
 import com.github.javafaker.Faker;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
