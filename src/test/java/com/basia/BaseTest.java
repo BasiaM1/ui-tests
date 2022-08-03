@@ -13,7 +13,7 @@ import static com.basia.config.YamlParser.getConfig;
 public abstract class BaseTest {
 
     protected WebDriver driver;
-    public LoginPage loginPage;
+    protected LoginPage loginPage;
 
     @BeforeClass
     static void setupClass() {

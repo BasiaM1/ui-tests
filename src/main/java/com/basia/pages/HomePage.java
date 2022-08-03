@@ -10,7 +10,7 @@ public class HomePage extends AbstractPage {
     @FindBy(css = "h1")
     private WebElement header;
 
-    protected HomePage(WebDriver driver) {
+    public HomePage(WebDriver driver) {
         super(driver);
     }
 
