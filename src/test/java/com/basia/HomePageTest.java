@@ -33,10 +33,12 @@ public class HomePageTest extends BaseTest {
         local.setItem("user", userValue);
     }
 
+    @SneakyThrows
     @Test
     void shouldBeOnHomePage() {
         driver.navigate().to(YamlParser.getConfig().getUrl());
-        HomePage homePage = new HomePage(driver);
-        homePage.verifyHeaderContains(user.getFirstName());
+        new HomePage(driver)
+                .verifyHeaderContains(user.getFirstName())
+                .verifyUserCount(2);
     }
 }
