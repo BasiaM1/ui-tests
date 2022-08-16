@@ -1,6 +1,8 @@
 package com.basia;
 
+import com.basia.api.ApiUserDetails;
 import com.basia.api.dto.register.RegisterDto;
+import com.basia.api.dto.userdetails.UserDetailsDto;
 import com.basia.api.enums.InputFields;
 import com.basia.config.YamlParser;
 import com.basia.pages.EditPage;
@@ -15,8 +17,11 @@ import static com.basia.api.enums.InputFields.FIRST_NAME;
 import static com.basia.api.enums.InputFields.LAST_NAME;
 import static com.basia.providers.UserProvider.getRandomUser;
 import static com.basia.utils.LoginUtil.loginAsRandomUser;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class EditPageTest extends BaseTest {
+
+    private ApiUserDetails apiUserDetails = new ApiUserDetails();
 
     private RegisterDto user = getRandomUser();
     private String token;
@@ -40,9 +45,16 @@ public class EditPageTest extends BaseTest {
         InputFields.getInputLabelsEnabledToEdit().forEach(validator::assertFieldsAreEnabledToEdit);
         validator.assertDataInEditFormAreCorrect(user);
 
-        editPage.editUserDetails(FIRST_NAME.getLabel(), RandomStringUtils.randomAlphabetic(8));
-        editPage.editUserDetails(LAST_NAME.getLabel(), RandomStringUtils.randomAlphabetic(8));
+        String newFirstName = RandomStringUtils.randomAlphabetic(8);
+        String newLastName = RandomStringUtils.randomAlphabetic(8);
+        editPage.editUserDetails(FIRST_NAME.getLabel(), newFirstName);
+        editPage.editUserDetails(LAST_NAME.getLabel(), newLastName);
 
         editPage.getEditUserButton().click();
+
+        Thread.sleep(1000);
+        UserDetailsDto editedUserDetails = apiUserDetails.getUserDetails(user.getUsername(), token);
+        assertThat(editedUserDetails.getFirstName()).isEqualTo(newFirstName);
+        assertThat(editedUserDetails.getLastName()).isEqualTo(newLastName);
     }
 }
