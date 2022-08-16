@@ -19,10 +19,11 @@ import static com.basia.utils.LoginUtil.loginAsRandomUser;
 public class EditPageTest extends BaseTest {
 
     private RegisterDto user = getRandomUser();
+    private String token;
 
     @BeforeMethod
     private void goToHomePageAsRandomUser() {
-        loginAsRandomUser(user, driver);
+        token = loginAsRandomUser(user, driver);
     }
 
     @SneakyThrows

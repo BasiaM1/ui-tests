@@ -1,6 +1,8 @@
-package com.basia.pages;
+package com.basia.pages.register;
 
 import com.basia.api.dto.register.RegisterDto;
+import com.basia.pages.AbstractPage;
+import com.basia.pages.LoginPage;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;

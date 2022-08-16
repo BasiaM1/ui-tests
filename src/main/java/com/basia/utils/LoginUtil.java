@@ -20,11 +20,12 @@ public class LoginUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @SneakyThrows
-    public static void loginAsRandomUser(RegisterDto user, WebDriver driver) {
+    public static String loginAsRandomUser(RegisterDto user, WebDriver driver) {
         apiRegister.register(user);
         LoginResponseDto loginResponse = apiLogin.login(new LoginDto(user.getUsername(), user.getPassword()));
         String userValue = objectMapper.writeValueAsString(loginResponse);
         LocalStorage local = ((WebStorage) driver).getLocalStorage();
         local.setItem("user", userValue);
+        return loginResponse.getToken();
     }
 }

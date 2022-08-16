@@ -5,8 +5,8 @@ import com.basia.api.enums.InputFields;
 import com.basia.helpers.ConstValues;
 import com.basia.pages.HomePage;
 import com.basia.pages.LoginPage;
-import com.basia.pages.RegisterPage;
-import com.basia.pages.RegisterPageValidator;
+import com.basia.pages.register.RegisterPage;
+import com.basia.pages.register.RegisterPageValidator;
 import com.basia.providers.UserProvider;
 import org.testng.annotations.Test;
 

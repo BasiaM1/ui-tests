@@ -1,5 +1,6 @@
 package com.basia.pages;
 
+import com.basia.pages.register.RegisterPage;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import org.openqa.selenium.By;
