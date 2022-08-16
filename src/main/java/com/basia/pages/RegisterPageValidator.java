@@ -14,7 +14,7 @@ public class RegisterPageValidator extends AbstractPageValidator<RegisterPage> {
     }
 
     public RegisterPageValidator assertErrorMessageForFieldIsDisplayed(String label) {
-        assertThat(page.getErrorMessageForField(label).getText())
+        assertThat(page.errorMessageForInputField(label).getText())
                 .describedAs("Field %s should have error message but it hasn't", label)
                 .contains(ConstValues.FIELD_ERROR_MESSAGE);
 
@@ -22,7 +22,7 @@ public class RegisterPageValidator extends AbstractPageValidator<RegisterPage> {
     }
 
     public RegisterPageValidator assertFieldHasRedBorder(String label) {
-        assertThat(getBorderColor(page.getField(label)))
+        assertThat(getBorderColor(page.inputField(label)))
                 .describedAs("Field %s should have red border but it hasn't", label)
                 .isEqualTo(Colors.INPUT_VALIDATION_RED.getColor());
 

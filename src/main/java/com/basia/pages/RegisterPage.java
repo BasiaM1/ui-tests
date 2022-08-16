@@ -36,22 +36,20 @@ public class RegisterPage extends AbstractPage {
     @FindBy(className = "alert")
     private WebElement alert;
 
-
-    public RegisterPage(WebDriver driver) {
-        super(driver);
+    protected WebElement inputField(String label) {
+        return driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input", label)));
     }
 
-    public WebElement getField(String label){
-        return driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input",label)));
-    }
-
-    public WebElement getErrorMessageForField(String label){
+    protected WebElement errorMessageForInputField(String label) {
         By errorMessageXpath = By.xpath(String.format("//label[text()='%s']/following-sibling::div[@class='invalid-feedback']", label));
         wait.until(ExpectedConditions.presenceOfElementLocated(errorMessageXpath));
 
         return driver.findElement(errorMessageXpath);
     }
 
+    public RegisterPage(WebDriver driver) {
+        super(driver);
+    }
     @SneakyThrows
     public <T extends AbstractPage> T attemptRegister(RegisterDto user, Class<T> expectedPage) {
         firstNameField.sendKeys(user.getFirstName());

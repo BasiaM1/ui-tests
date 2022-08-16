@@ -1,7 +1,6 @@
 package com.basia;
 
 import com.basia.pages.LoginPage;
-import com.google.common.net.MediaType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
@@ -9,10 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
-import org.openqa.selenium.devtools.NetworkInterceptor;
 import org.openqa.selenium.remote.Augmenter;
-import org.openqa.selenium.remote.http.HttpResponse;
-import org.openqa.selenium.remote.http.Route;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -42,15 +38,15 @@ public abstract class BaseTest {
         DevTools devTools = ((HasDevTools) driver).getDevTools();
         devTools.createSession();
 
-        new NetworkInterceptor(
-                driver,
-                Route.matching(req -> req.getUri().endsWith("/users"))
-                        .to(() -> req ->
-                                new HttpResponse()
-                                        .setStatus(200)
-                                        .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
-                                        .setContent(utf8String(loadFile("/users.json"))))
-        );
+//        new NetworkInterceptor(
+//                driver,
+//                Route.matching(req -> req.getUri().endsWith("/users"))
+//                        .to(() -> req ->
+//                                new HttpResponse()
+//                                        .setStatus(200)
+//                                        .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
+//                                        .setContent(utf8String(loadFile("/users.json"))))
+//        );
 
         goToPage();
     }
@@ -73,4 +69,5 @@ public abstract class BaseTest {
 
         return loginPage;
     }
+
 }
