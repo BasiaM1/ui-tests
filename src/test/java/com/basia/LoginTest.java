@@ -7,7 +7,6 @@ import com.basia.helpers.ConstValues;
 import com.basia.pages.HomePage;
 import lombok.SneakyThrows;
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.basia.config.YamlParser.getConfig;
