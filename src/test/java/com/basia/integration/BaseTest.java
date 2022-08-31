@@ -1,11 +1,7 @@
-package com.basia;
+package com.basia.integration;
 
-import com.basia.api.ApiDeleteUser;
-import com.basia.api.ApiGetAllUsers;
-import com.basia.api.ApiUserDetails;
 import com.basia.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -16,16 +12,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-import java.nio.charset.StandardCharsets;
 
 import static com.basia.config.YamlParser.getConfig;
-import static org.apache.commons.io.IOUtils.resourceToString;
-import static org.openqa.selenium.remote.http.Contents.utf8String;
 
 public abstract class BaseTest {
-    protected ApiUserDetails apiUserDetails = new ApiUserDetails();
-    protected ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
-    protected ApiGetAllUsers apiGetAllUsers = new ApiGetAllUsers();
     protected WebDriver driver;
     protected LoginPage loginPage;
 
@@ -35,30 +25,14 @@ public abstract class BaseTest {
     }
 
     @BeforeMethod
-    void setupTest() {
+    protected void setupTest() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-web-security");
         driver = new ChromeDriver(chromeOptions);
         driver = new Augmenter().augment(driver);
         DevTools devTools = ((HasDevTools) driver).getDevTools();
         devTools.createSession();
-
-//        new NetworkInterceptor(
-//                driver,
-//                Route.matching(req -> req.getUri().endsWith("/users"))
-//                        .to(() -> req ->
-//                                new HttpResponse()
-//                                        .setStatus(200)
-//                                        .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
-//                                        .setContent(utf8String(loadFile("/users.json"))))
-//        );
-
         goToPage();
-    }
-
-    @SneakyThrows
-    private static String loadFile(String file) {
-        return resourceToString(file, StandardCharsets.UTF_8);
     }
 
     @AfterMethod
@@ -68,11 +42,10 @@ public abstract class BaseTest {
         }
     }
 
-    private LoginPage goToPage() {
+    private void goToPage() {
         driver.navigate().to(getConfig().getUrl());
         loginPage = new LoginPage(driver);
 
-        return loginPage;
     }
 
 }

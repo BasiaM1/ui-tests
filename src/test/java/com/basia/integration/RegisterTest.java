@@ -1,5 +1,6 @@
-package com.basia;
+package com.basia.integration;
 
+import com.basia.api.ApiDeleteUser;
 import com.basia.api.dto.login.LoginResponseDto;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.enums.InputFields;
@@ -19,12 +20,13 @@ import org.testng.annotations.Test;
 
 public class RegisterTest extends BaseTest {
 
+    private final ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
+
     LoginPage loginPage;
     RegisterPage registerPage;
     RegisterPageValidator validator;
     RegisterDto newUser;
     String token;
-
 
     @BeforeMethod
     private void setUpPageAndValidator() {

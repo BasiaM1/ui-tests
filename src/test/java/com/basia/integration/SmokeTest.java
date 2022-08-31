@@ -1,4 +1,4 @@
-package com.basia;
+package com.basia.integration;
 
 import com.basia.config.YamlParser;
 import org.testng.annotations.Test;

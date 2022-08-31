@@ -1,5 +1,7 @@
-package com.basia;
+package com.basia.integration;
 
+import com.basia.api.ApiDeleteUser;
+import com.basia.api.ApiGetAllUsers;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.config.YamlParser;
 import com.basia.pages.HomePage;
@@ -13,6 +15,9 @@ import static com.basia.utils.LoginUtil.loginAsRandomUser;
 public class HomePageTest extends BaseTest {
 
     private final RegisterDto user = getRandomUser();
+    private final ApiGetAllUsers apiGetAllUsers = new ApiGetAllUsers();
+    private final ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
+
     private String token;
 
     @BeforeMethod

@@ -1,5 +1,6 @@
-package com.basia;
+package com.basia.integration;
 
+import com.basia.api.ApiDeleteUser;
 import com.basia.api.ApiRegister;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.register.RegisterResponseDto;
@@ -13,6 +14,8 @@ import static com.basia.config.YamlParser.getConfig;
 import static com.basia.providers.UserProvider.getRandomUser;
 
 public class LoginTest extends BaseTest {
+
+    private final ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
 
     String token;
     RegisterDto randomUser;

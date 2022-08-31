@@ -1,5 +1,6 @@
-package com.basia;
+package com.basia.integration;
 
+import com.basia.api.ApiUserDetails;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.userdetails.UserDetailsDto;
 import com.basia.enums.InputFields;
@@ -20,7 +21,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EditPageTest extends BaseTest {
 
-    private RegisterDto user = getRandomUser();
+    private final RegisterDto user = getRandomUser();
+    private final ApiUserDetails apiUserDetails = new ApiUserDetails();
+
     private String token;
 
     @BeforeMethod
