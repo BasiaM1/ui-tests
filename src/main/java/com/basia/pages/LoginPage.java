@@ -45,8 +45,9 @@ public class LoginPage extends AbstractPage {
         return this;
     }
 
-    public void verifyAlertMessageContains(String text) {
+    public LoginPage verifyAlertMessageContains(String text) {
         wait.until(ExpectedConditions.textToBePresentInElement(alert, text));
+        return this;
     }
 
     public RegisterPage goToRegisterPage() {

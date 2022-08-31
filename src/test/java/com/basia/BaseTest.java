@@ -1,5 +1,8 @@
 package com.basia;
 
+import com.basia.api.ApiDeleteUser;
+import com.basia.api.ApiGetAllUsers;
+import com.basia.api.ApiUserDetails;
 import com.basia.pages.LoginPage;
 import com.google.common.net.MediaType;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -24,7 +27,9 @@ import static org.apache.commons.io.IOUtils.resourceToString;
 import static org.openqa.selenium.remote.http.Contents.utf8String;
 
 public abstract class BaseTest {
-
+    protected ApiUserDetails apiUserDetails = new ApiUserDetails();
+    protected ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
+    protected ApiGetAllUsers apiGetAllUsers = new ApiGetAllUsers();
     protected WebDriver driver;
     protected LoginPage loginPage;
 

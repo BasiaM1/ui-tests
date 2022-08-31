@@ -1,6 +1,6 @@
 package com.basia.pages;
 
-import com.basia.api.enums.Colors;
+import com.basia.enums.Colors;
 import com.basia.helpers.ConstValues;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
