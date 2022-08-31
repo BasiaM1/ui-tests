@@ -1,4 +1,4 @@
-package com.basia.api.enums;
+package com.basia.enums;
 
 import lombok.Getter;
 import org.openqa.selenium.support.Color;

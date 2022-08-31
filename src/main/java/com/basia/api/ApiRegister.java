@@ -1,6 +1,5 @@
 package com.basia.api;
 
-import com.basia.AbstractApi;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.register.RegisterResponseDto;
 import lombok.extern.slf4j.Slf4j;

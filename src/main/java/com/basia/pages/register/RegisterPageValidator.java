@@ -1,6 +1,6 @@
 package com.basia.pages.register;
 
-import com.basia.api.enums.Colors;
+import com.basia.enums.Colors;
 import com.basia.helpers.ConstValues;
 import com.basia.pages.AbstractPageValidator;
 import org.openqa.selenium.WebElement;

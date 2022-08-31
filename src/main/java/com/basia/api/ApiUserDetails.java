@@ -1,6 +1,5 @@
 package com.basia.api;
 
-import com.basia.AbstractApi;
 import com.basia.api.dto.userdetails.UserDetailsDto;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +16,7 @@ public class ApiUserDetails extends AbstractApi {
         Request request = new Request.Builder()
                 .url(String.format("http://localhost:4001/users/%s", username))
                 .get()
-                .addHeader(AUTHORIZARION, getAuthorizationHeader(token))
+                .addHeader(AUTHORIZATION, getAuthorizationHeader(token))
                 .build();
         Response response = client.newCall(request).execute();
         String responseString = response.body().string();

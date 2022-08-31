@@ -20,7 +20,12 @@ public class HomePage extends AbstractPage {
 
     private WebElement editButton(String firstName, String lastName) {
         return driver.findElement(By.xpath(String.format("//ul//li[text()='%s']/span/a[contains(@class, 'edit')]",
-                String.format("%s %s",firstName, lastName))));
+                String.format("%s %s", firstName, lastName))));
+    }
+
+    private WebElement deleteButton(String firstName, String lastName) {
+        return driver.findElement(By.xpath(String.format("//ul//li[text()='%s']/span/a[contains(@class, 'delete')]",
+                String.format("%s %s", firstName, lastName))));
     }
 
     public HomePage(WebDriver driver) {
@@ -36,8 +41,13 @@ public class HomePage extends AbstractPage {
         assertThat(users).hasSize(userCount);
     }
 
-    public EditPage goToEditUserDetails(String firstName, String lastName){
-        editButton(firstName,lastName).click();
+    public EditPage goToEditUserDetails(String firstName, String lastName) {
+        editButton(firstName, lastName).click();
         return new EditPage(getDriver());
+    }
+
+    public HomePage deleteUser(String firstName, String lastName) {
+        deleteButton(firstName, lastName).click();
+        return this;
     }
 }

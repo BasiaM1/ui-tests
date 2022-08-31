@@ -1,9 +1,8 @@
 package com.basia;
 
-import com.basia.api.ApiUserDetails;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.userdetails.UserDetailsDto;
-import com.basia.api.enums.InputFields;
+import com.basia.enums.InputFields;
 import com.basia.config.YamlParser;
 import com.basia.pages.EditPage;
 import com.basia.pages.EditPageValidator;
@@ -13,15 +12,13 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.basia.api.enums.InputFields.FIRST_NAME;
-import static com.basia.api.enums.InputFields.LAST_NAME;
+import static com.basia.enums.InputFields.FIRST_NAME;
+import static com.basia.enums.InputFields.LAST_NAME;
 import static com.basia.providers.UserProvider.getRandomUser;
 import static com.basia.utils.LoginUtil.loginAsRandomUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EditPageTest extends BaseTest {
-
-    private ApiUserDetails apiUserDetails = new ApiUserDetails();
 
     private RegisterDto user = getRandomUser();
     private String token;
@@ -56,5 +53,8 @@ public class EditPageTest extends BaseTest {
         UserDetailsDto editedUserDetails = apiUserDetails.getUserDetails(user.getUsername(), token);
         assertThat(editedUserDetails.getFirstName()).isEqualTo(newFirstName);
         assertThat(editedUserDetails.getLastName()).isEqualTo(newLastName);
+
+        new HomePage(driver)
+                .deleteUser(user.getFirstName(), user.getLastName());
     }
 }
