@@ -1,6 +1,7 @@
 package com.basia.isolation;
 
 import com.basia.pages.LoginPage;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.SneakyThrows;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +22,8 @@ import static org.apache.commons.io.IOUtils.resourceToString;
 public abstract class IsolatedBaseTest {
     protected WebDriver driver;
     protected LoginPage loginPage;
+
+    protected ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeClass
     static void setupClass() {

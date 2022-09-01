@@ -5,13 +5,11 @@ import com.basia.api.dto.login.LoginResponseDto;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.pages.HomePage;
 import com.basia.pages.LoginPage;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.MediaType;
 import lombok.SneakyThrows;
 import org.openqa.selenium.devtools.NetworkInterceptor;
 import org.openqa.selenium.remote.http.HttpResponse;
 import org.openqa.selenium.remote.http.Route;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.basia.providers.UserProvider.getRandomUser;
@@ -22,10 +20,6 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
 
     private static final String INVALID_USERNAME_PASSWORD_SUPPLIED = "Invalid username/password supplied";
     private final RegisterDto registerDto = getRandomUser();
-
-    @AfterMethod
-    public void cleanUp() {
-    }
 
     @Test
     public void shouldBeAbleToLogin() {
@@ -88,7 +82,6 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
 
     @SneakyThrows
     private String buildFailedLoginResponseBody() {
-        ObjectMapper objectMapper = new ObjectMapper();
         FailedLoginDto failedLoginDto = FailedLoginDto.builder()
                 .error("Unprocessable Entity")
                 .status(422)
@@ -102,7 +95,6 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
 
     @SneakyThrows
     private String buildResponseBody(String username) {
-        ObjectMapper objectMapper = new ObjectMapper();
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .token("fakeToken")
                 .roles(registerDto.getRoles())
