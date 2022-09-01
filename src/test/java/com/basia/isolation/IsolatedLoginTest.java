@@ -31,14 +31,12 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
     public void shouldBeAbleToLogin() {
         String username = randomAlphabetic(5);
         String password = randomAlphabetic(5);
-        mockGetAllUsers();
-        mockSuccessfulLogin(username);
+        mockSuccessfulLoginAndGetUsers(username);
 
-        HomePage homePage = loginPage
-                .attemptLogin(username, password, HomePage.class);
-
-        homePage
-                .verifyHeaderContains(registerDto.getFirstName());
+        loginPage
+                .attemptLogin(username, password, HomePage.class)
+                .verifyHeaderContains(registerDto.getFirstName())
+                .verifyUserCount(2);
     }
 
     @Test
@@ -52,15 +50,26 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
     }
 
     @SuppressWarnings("all")
-    private void mockSuccessfulLogin(String username) {
+    private void mockSuccessfulLoginAndGetUsers(String username) {
+        Route successfulLoginRoute = Route.matching(req -> req.getUri().endsWith("/users/signin"))
+                .to(() -> req ->
+                        new HttpResponse()
+                                .setStatus(200)
+                                .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
+                                .setContent(utf8String(buildResponseBody(username))));
+
+        Route getAllUsersRoute = Route.matching(req -> req.getUri().endsWith("/users"))
+                .to(() -> req ->
+                        new HttpResponse()
+                                .setStatus(200)
+                                .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
+                                .setContent(utf8String(loadFile("/users.json"))));
+
         new NetworkInterceptor(
                 driver,
-                Route.matching(req -> req.getUri().endsWith("/users/signin"))
-                        .to(() -> req ->
-                                new HttpResponse()
-                                        .setStatus(200)
-                                        .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
-                                        .setContent(utf8String(buildResponseBody(username))))
+                Route.combine(
+                        successfulLoginRoute,
+                        getAllUsersRoute)
         );
     }
 
@@ -68,25 +77,12 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
     private void mockUnsuccessfulLogin() {
         new NetworkInterceptor(
                 driver,
-                Route.matching(req -> req.getUri().endsWith("/users/signin"))
+                Route.matching(req -> req.getUri().contains("/users/signin"))
                         .to(() -> req ->
                                 new HttpResponse()
                                         .setStatus(400)
                                         .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
                                         .setContent(utf8String(buildFailedLoginResponseBody())))
-        );
-    }
-
-    @SuppressWarnings("all")
-    protected void mockGetAllUsers() {
-        new NetworkInterceptor(
-                driver,
-                Route.matching(req -> req.getUri().endsWith("/users"))
-                        .to(() -> req ->
-                                new HttpResponse()
-                                        .setStatus(200)
-                                        .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
-                                        .setContent(utf8String(loadFile("/users.json"))))
         );
     }
 
