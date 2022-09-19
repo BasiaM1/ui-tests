@@ -1,13 +1,13 @@
 package com.basia.isolation;
 
 import com.basia.api.dto.register.RegisterDto;
+import com.basia.api.dto.register.RegisterResponseDto;
 import com.basia.enums.InputFields;
 import com.basia.helpers.ConstValues;
 import com.basia.pages.LoginPage;
 import com.basia.pages.register.RegisterPage;
 import com.basia.pages.register.RegisterPageValidator;
 import com.basia.providers.UserProvider;
-import com.google.common.net.MediaType;
 import lombok.SneakyThrows;
 import org.openqa.selenium.devtools.NetworkInterceptor;
 import org.openqa.selenium.remote.http.HttpResponse;
@@ -51,19 +51,25 @@ public class IsolatedRegisterTest extends IsolatedBaseTest {
                         .to(() -> req ->
                                 new HttpResponse()
                                         .setStatus(200)
-                                        .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
-                                        .setContent(utf8String("[{\"token\":\"fakeToken\"}]"))));
-
+                                        .setContent(utf8String(getToken()))));
     }
 
-    private void mockUnsuccessfulRegister() {
+    @SneakyThrows
+    private String getToken() {
+        RegisterResponseDto response = RegisterResponseDto.builder()
+                .token("fakeToken")
+                .build();
+
+        return objectMapper.writeValueAsString(response);
+    }
+
+    private void mockUnsuccessfulRegister() {//user already exists
         new NetworkInterceptor(
                 driver,
                 Route.matching(req -> req.getUri().contains("/users/signup"))
                         .to(() -> req ->
                                 new HttpResponse()
                                         .setStatus(400)
-                                        .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
                                         .setContent(utf8String(buildFailedRegisterResponseBody())))
         );
     }
@@ -75,7 +81,7 @@ public class IsolatedRegisterTest extends IsolatedBaseTest {
     }
 
     @SneakyThrows
-    private String buildFailedRegisterResponseBody() {
+    private String buildFailedRegisterResponseBody() { //objectMapper
         return "{\"firstName\":\"Required firstName length is 4 or more\"," +
                 "\"lastName\":\"Required lastName length is 4 or more\"," +
                 "\"password\":\"Required password length is 4 or more\"," +
