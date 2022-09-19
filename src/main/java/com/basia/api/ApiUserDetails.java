@@ -1,10 +1,13 @@
 package com.basia.api;
 
 import com.basia.api.dto.userdetails.UserDetailsDto;
+import io.restassured.http.ContentType;
+import io.restassured.http.Header;
+import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Request;
-import okhttp3.Response;
+
+import static io.restassured.RestAssured.given;
 
 @Slf4j
 public class ApiUserDetails extends AbstractApi {
@@ -13,15 +16,12 @@ public class ApiUserDetails extends AbstractApi {
     @SuppressWarnings("all")
     public UserDetailsDto getUserDetails(String username, String token) {
         log.info("Sending user details request for user {}", username);
-        Request request = new Request.Builder()
-                .url(String.format("http://localhost:4001/users/%s", username))
-                .get()
-                .addHeader(AUTHORIZATION, getAuthorizationHeader(token))
-                .build();
-        Response response = client.newCall(request).execute();
-        String responseString = response.body().string();
-        log.info("Request response {}", responseString);
-        return objectMapper.readValue(responseString, UserDetailsDto.class);
-    }
 
+        Response response = given().contentType(ContentType.JSON)
+                .header(new Header(AUTHORIZATION, getAuthorizationHeader(token)))
+                .when()
+                .get(String.format("http://localhost:4001/users/%s", username));
+
+        return response.as(UserDetailsDto.class);
+    }
 }

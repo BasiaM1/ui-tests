@@ -3,8 +3,10 @@ package com.basia.isolation;
 import com.basia.api.dto.login.FailedLoginDto;
 import com.basia.api.dto.login.LoginResponseDto;
 import com.basia.api.dto.register.RegisterDto;
+import com.basia.helpers.ConstValues;
 import com.basia.pages.HomePage;
 import com.basia.pages.LoginPage;
+import com.basia.providers.UserProvider;
 import com.google.common.net.MediaType;
 import lombok.SneakyThrows;
 import org.openqa.selenium.devtools.NetworkInterceptor;
@@ -12,14 +14,12 @@ import org.openqa.selenium.remote.http.HttpResponse;
 import org.openqa.selenium.remote.http.Route;
 import org.testng.annotations.Test;
 
-import static com.basia.providers.UserProvider.getRandomUser;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 import static org.openqa.selenium.remote.http.Contents.utf8String;
 
 public class IsolatedLoginTest extends IsolatedBaseTest {
 
-    private static final String INVALID_USERNAME_PASSWORD_SUPPLIED = "Invalid username/password supplied";
-    private final RegisterDto registerDto = getRandomUser();
+    private final RegisterDto user= UserProvider.getRandomUser();
 
     @Test
     public void shouldBeAbleToLogin() {
@@ -29,7 +29,7 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
 
         loginPage
                 .attemptLogin(username, password, HomePage.class)
-                .verifyHeaderContains(registerDto.getFirstName())
+                .verifyHeaderContains(user.getFirstName())
                 .verifyUserCount(2);
     }
 
@@ -39,12 +39,12 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
 
         loginPage
                 .attemptLogin(randomAlphabetic(5), randomAlphabetic(5), LoginPage.class)
-                .verifyAlertMessageContains(INVALID_USERNAME_PASSWORD_SUPPLIED);
+                .verifyAlertMessageContains(ConstValues.FAIL_LOGIN_MESSAGE);
 
     }
 
     @SuppressWarnings("all")
-    private void mockSuccessfulLoginAndGetUsers(String username) {
+    public void mockSuccessfulLoginAndGetUsers(String username) {
         Route successfulLoginRoute = Route.matching(req -> req.getUri().endsWith("/users/signin"))
                 .to(() -> req ->
                         new HttpResponse()
@@ -85,7 +85,7 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
         FailedLoginDto failedLoginDto = FailedLoginDto.builder()
                 .error("Unprocessable Entity")
                 .status(422)
-                .message(INVALID_USERNAME_PASSWORD_SUPPLIED)
+                .message(ConstValues.FAIL_LOGIN_MESSAGE)
                 .path("/users/signin")
                 .timestamp("2022-08-31T18:17:45.551+00:00")
                 .build();
@@ -97,10 +97,10 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
     private String buildResponseBody(String username) {
         LoginResponseDto loginResponseDto = LoginResponseDto.builder()
                 .token("fakeToken")
-                .roles(registerDto.getRoles())
-                .email(registerDto.getEmail())
-                .firstName(registerDto.getFirstName())
-                .lastName(registerDto.getLastName())
+                .roles(user.getRoles())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
                 .username(username)
                 .build();
 

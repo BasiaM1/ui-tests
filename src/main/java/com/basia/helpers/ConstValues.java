@@ -6,4 +6,5 @@ public class ConstValues {
     public static final String FAIL_LOGIN_MESSAGE = "Invalid username/password supplied";
     public static final String FAIL_REGISTER_MESSAGE = "Username is already in use";
     public static final String FIELD_ERROR_MESSAGE = "Required field length is 4 or more";
+    public static final String EMAIL_ERROR_MESSAGE = "musi być poprawnie sformatowanym adresem e-mail";
 }

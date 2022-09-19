@@ -1,6 +1,6 @@
 package com.basia.utils;
 
-import com.basia.api.ApiLogin;
+import com.basia.api.*;
 import com.basia.api.ApiRegister;
 import com.basia.api.dto.login.LoginDto;
 import com.basia.api.dto.login.LoginResponseDto;
@@ -13,7 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
 
-@NoArgsConstructor(access= AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LoginUtil {
     private static final ApiRegister apiRegister = new ApiRegister();
     private static final ApiLogin apiLogin = new ApiLogin();

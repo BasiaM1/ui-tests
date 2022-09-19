@@ -2,16 +2,15 @@ package com.basia.api;
 
 
 import com.basia.api.dto.userdetails.UserDetailsDto;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
+import io.restassured.http.ContentType;
+import io.restassured.http.Header;
+import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Request;
-import okhttp3.ResponseBody;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
+import static io.restassured.RestAssured.given;
 
 @Slf4j
 public class ApiGetAllUsers extends AbstractApi {
@@ -20,21 +19,13 @@ public class ApiGetAllUsers extends AbstractApi {
     public List<UserDetailsDto> getAllUsers(String token) {
         log.info("Sending request to get all users");
 
-        Request request = new Request.Builder()
-                .url("http://localhost:4001/users")
-                .get()
-                .addHeader(AUTHORIZATION, getAuthorizationHeader(token))
-                .build();
+        Response response = given().contentType(ContentType.JSON)
+                .header(new Header(AUTHORIZATION, getAuthorizationHeader(token)))
+                .when()
+                .get("http://localhost:4001/users");
 
-        ResponseBody response = client.newCall(request).execute().body();
-
-        Gson gson = new Gson();
-        Type userDetails = new TypeToken<ArrayList<UserDetailsDto>>() {
-        }.getType();
-        return gson.fromJson(response.string(), userDetails);
-
-//        log.info("Request response {}", responseString);
-//        return objectMapper.readValue(response.string(), new TypeReference<List<UserDetailsDto>>() {
-//        });
+        return response
+                .jsonPath()
+                .getList(".", UserDetailsDto.class);
     }
 }
