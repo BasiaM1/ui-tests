@@ -19,5 +19,26 @@
     ],
     "firstName": "Gosia",
     "lastName": "Radzyminska"
+  },
+  {
+    "id": 1,
+    "username": "admin2",
+    "email": "admin@email.com",
+    "roles": [
+      "ROLE_ADMIN",
+      "ROLE_CLIENT"
+    ],
+    "firstName": "Jan",
+    "lastName": "Radzyminski2"
+  },
+  {
+    "id": 2,
+    "username": "client2",
+    "email": "client@email.com",
+    "roles": [
+      "ROLE_CLIENT"
+    ],
+    "firstName": "Janina",
+    "lastName": "Radzyminska2"
   }
 ]

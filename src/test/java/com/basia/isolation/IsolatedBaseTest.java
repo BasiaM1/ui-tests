@@ -1,6 +1,9 @@
 package com.basia.isolation;
 
+import com.basia.api.dto.userdetails.UserDetailsDto;
 import com.basia.pages.LoginPage;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.SneakyThrows;
@@ -15,11 +18,15 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import static com.basia.config.YamlParser.getConfig;
 import static org.apache.commons.io.IOUtils.resourceToString;
 
 public abstract class IsolatedBaseTest {
+
+    public static final String USERS_AS_STRING = loadFile("/users.json");
+
     protected WebDriver driver;
     protected LoginPage loginPage;
 
@@ -60,4 +67,8 @@ public abstract class IsolatedBaseTest {
         return loginPage;
     }
 
+    @SneakyThrows
+    protected List<UserDetailsDto> getUsersList() {
+        return objectMapper.readValue(USERS_AS_STRING, new TypeReference<>() {});
+    }
 }

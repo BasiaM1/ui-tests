@@ -19,7 +19,7 @@ import static org.openqa.selenium.remote.http.Contents.utf8String;
 
 public class IsolatedLoginTest extends IsolatedBaseTest {
 
-    private final RegisterDto user= UserProvider.getRandomUser();
+    private final RegisterDto user = UserProvider.getRandomUser();
 
     @Test
     public void shouldBeAbleToLogin() {
@@ -30,7 +30,7 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
         loginPage
                 .attemptLogin(username, password, HomePage.class)
                 .verifyHeaderContains(user.getFirstName())
-                .verifyUserCount(2);
+                .verifyUserCount(getNumberOfUsers());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
     }
 
     @SuppressWarnings("all")
-    public void mockSuccessfulLoginAndGetUsers(String username) {
+    private void mockSuccessfulLoginAndGetUsers(String username) {
         Route successfulLoginRoute = Route.matching(req -> req.getUri().endsWith("/users/signin"))
                 .to(() -> req ->
                         new HttpResponse()
@@ -57,7 +57,7 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
                         new HttpResponse()
                                 .setStatus(200)
                                 .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
-                                .setContent(utf8String(loadFile("/users.json"))));
+                                .setContent(utf8String(USERS_AS_STRING)));
 
         new NetworkInterceptor(
                 driver,
@@ -105,6 +105,11 @@ public class IsolatedLoginTest extends IsolatedBaseTest {
                 .build();
 
         return objectMapper.writeValueAsString(loginResponseDto);
+    }
+
+    @SneakyThrows
+    private int getNumberOfUsers() {
+        return getUsersList().size();
     }
 
 }
