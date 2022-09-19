@@ -47,14 +47,14 @@ public class HomePageTest extends BaseTest {
 
     @SneakyThrows
     @Test
-    public void shouldBeAbleToDeleteUsers(){
+    public void shouldBeAbleToDeleteUsers() {
         ApiRegister apiRegister = new ApiRegister();
         apiRegister.register(user1);
         apiRegister.register(user2);
 
         driver.navigate().to(YamlParser.getConfig().getUrl());
 
-        int defaultUsersSizeAndLogged =3;
+        int defaultUsersSizeAndLogged = 3;
 
         new HomePage(driver)
                 .deleteAllUsersWithoutDefault(user.getFirstName())

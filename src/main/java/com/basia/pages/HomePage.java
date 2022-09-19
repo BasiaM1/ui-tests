@@ -9,7 +9,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -49,19 +48,21 @@ public class HomePage extends AbstractPage {
     }
 
     public HomePage deleteAllUsersWithoutDefault(String loggedUserName) {
-        List<String> usersFullName = users.stream()
-                .map(WebElement::getText)
-                .filter(text -> (!text.contains("Slawomir")) && (!text.contains("Gosia")))
-                .filter(text -> !text.contains(loggedUserName))
-                .map(text -> text.split(" - Delete - Edit - Email")[0])
-                .collect(Collectors.toList());
+        users.stream()
+                .filter(el -> filterOutUsers(loggedUserName, el))
+                .forEach(this::deleteUser);
 
-        usersFullName.forEach(u -> {
-            deleteButton(u).click();
-
-            Alert alert = driver.switchTo().alert();
-            alert.accept();
-        });
         return this;
+    }
+
+    private void deleteUser(WebElement el) {
+        el.findElement(By.className("delete")).click();
+
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+    }
+
+    private static boolean filterOutUsers(String loggedUserName, WebElement el) {
+        return !el.getText().contains("Slawomir") && !el.getText().contains("Gosia") && !el.getText().contains(loggedUserName);
     }
 }

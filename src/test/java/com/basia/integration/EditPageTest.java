@@ -59,7 +59,6 @@ public class EditPageTest extends BaseTest {
 
         editPage.getEditUserButton().click();
 
-        Thread.sleep(1000);
         UserDetailsDto editedUserDetails = apiUserDetails.getUserDetails(user.getUsername(), token);
         assertThat(editedUserDetails.getFirstName()).isEqualTo(newFirstName);
         assertThat(editedUserDetails.getLastName()).isEqualTo(newLastName);
