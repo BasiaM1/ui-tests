@@ -30,6 +30,12 @@ public class EditPageTest extends BaseTest {
     private ApiDeleteUser apiDeleteUser;
     @Autowired
     private LoginUtil loginUtil;
+    @Autowired
+    private HomePage homePage;
+    @Autowired
+    private EditPageValidator editPageValidator;
+    @Autowired
+    private EditPage editPage;
     private String token;
 
     @BeforeMethod
@@ -46,14 +52,11 @@ public class EditPageTest extends BaseTest {
     public void shouldBeAbleToSeeCorrectEditPage() {
         driver.navigate().to(config.getUrl());
 
-        new HomePage(driver)
-                .goToEditUserDetails(user.getFirstName(), user.getLastName());
-        EditPage editPage = new EditPage(driver);
-        EditPageValidator validator = new EditPageValidator(editPage);
+        homePage.goToEditUserDetails(user.getFirstName(), user.getLastName());
 
-        InputFields.getInputLabelsDisabledToEdit().forEach(validator::assertFieldsAreDisabledToEdit);
-        InputFields.getInputLabelsEnabledToEdit().forEach(validator::assertFieldsAreEnabledToEdit);
-        validator.assertDataInEditFormAreCorrect(user);
+        InputFields.getInputLabelsDisabledToEdit().forEach(editPageValidator::assertFieldsAreDisabledToEdit);
+        InputFields.getInputLabelsEnabledToEdit().forEach(editPageValidator::assertFieldsAreEnabledToEdit);
+        editPageValidator.assertDataInEditFormAreCorrect(user);
 
         String newFirstName = RandomStringUtils.randomAlphabetic(8);
         String newLastName = RandomStringUtils.randomAlphabetic(8);

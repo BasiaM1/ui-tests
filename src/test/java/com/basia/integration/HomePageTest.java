@@ -31,6 +31,8 @@ public class HomePageTest extends BaseTest {
     private ApiRegister apiRegister;
     @Autowired
     private LoginUtil loginUtil;
+    @Autowired
+    private HomePage homePage;
 
     private String token;
 
@@ -65,7 +67,7 @@ public class HomePageTest extends BaseTest {
 
         int defaultUsersSizeAndLogged = 3;
 
-        new HomePage(driver)
+        homePage
                 .deleteAllUsersWithoutDefault(user.getFirstName())
                 .verifyUserCount(defaultUsersSizeAndLogged);
     }

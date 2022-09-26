@@ -1,17 +1,18 @@
 package com.basia.pages;
 
-import lombok.SneakyThrows;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Component
 public class HomePage extends AbstractPage {
 
     @FindBy(css = "h1")
@@ -20,6 +21,10 @@ public class HomePage extends AbstractPage {
     @FindBy(css = "ul li")
     private List<WebElement> users;
 
+    public HomePage(WebDriver driver) {
+        super(driver);
+    }
+
     private WebElement editButton(String firstName, String lastName) {
         return driver.findElement(By.xpath(String.format("//ul//li[text()='%s']/span/a[contains(@class, 'edit')]",
                 String.format("%s %s", firstName, lastName))));
@@ -27,10 +32,6 @@ public class HomePage extends AbstractPage {
 
     private WebElement deleteButton(String fullName) {
         return driver.findElement(By.xpath(String.format("//ul//li[text()='%s']/span/a[contains(@class, 'delete')]", fullName)));
-    }
-
-    public HomePage(WebDriver driver) {
-        super(driver);
     }
 
     public HomePage verifyHeaderContains(String firstName) {

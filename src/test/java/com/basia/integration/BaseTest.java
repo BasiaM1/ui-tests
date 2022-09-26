@@ -2,7 +2,6 @@ package com.basia.integration;
 
 import com.basia.config.SpringConfig;
 import com.basia.config.LocalConfig;
-import com.basia.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -24,8 +23,9 @@ import org.testng.annotations.BeforeMethod;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = SpringConfig.class)
 @EnableConfigurationProperties
 public abstract class BaseTest extends AbstractTestNGSpringContextTests {
+
+    @Autowired
     protected WebDriver driver;
-    protected LoginPage loginPage;
 
     @Autowired
     protected LocalConfig config;
@@ -37,12 +37,6 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests {
 
     @BeforeMethod
     protected void setupTest() {
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--disable-web-security");
-        driver = new ChromeDriver(chromeOptions);
-        driver = new Augmenter().augment(driver);
-        DevTools devTools = ((HasDevTools) driver).getDevTools();
-        devTools.createSession();
         goToPage();
     }
 
@@ -55,8 +49,6 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests {
 
     private void goToPage() {
         driver.navigate().to(config.getUrl());
-        loginPage = new LoginPage(driver);
-
     }
 
 }
