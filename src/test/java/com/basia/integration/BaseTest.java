@@ -1,6 +1,7 @@
 package com.basia.integration;
 
-import com.basia.config.Config;
+import com.basia.config.SpringConfig;
+import com.basia.config.LocalConfig;
 import com.basia.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -10,8 +11,8 @@ import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.remote.Augmenter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -19,17 +20,15 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
-
-import static com.basia.config.YamlParser.getConfig;
-
 @SpringBootTest
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = Config.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = SpringConfig.class)
+@EnableConfigurationProperties
 public abstract class BaseTest extends AbstractTestNGSpringContextTests {
     protected WebDriver driver;
     protected LoginPage loginPage;
 
     @Autowired
-    ApplicationContext applicationContext;
+    protected LocalConfig config;
 
     @BeforeClass
     static void setupClass() {
@@ -55,7 +54,7 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests {
     }
 
     private void goToPage() {
-        driver.navigate().to(getConfig().getUrl());
+        driver.navigate().to(config.getUrl());
         loginPage = new LoginPage(driver);
 
     }

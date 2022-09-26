@@ -4,7 +4,6 @@ import com.basia.api.ApiDeleteUser;
 import com.basia.api.ApiUserDetails;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.userdetails.UserDetailsDto;
-import com.basia.config.YamlParser;
 import com.basia.enums.InputFields;
 import com.basia.pages.EditPage;
 import com.basia.pages.EditPageValidator;
@@ -45,7 +44,7 @@ public class EditPageTest extends BaseTest {
     @SneakyThrows
     @Test
     public void shouldBeAbleToSeeCorrectEditPage() {
-        driver.navigate().to(YamlParser.getConfig().getUrl());
+        driver.navigate().to(config.getUrl());
 
         new HomePage(driver)
                 .goToEditUserDetails(user.getFirstName(), user.getLastName());

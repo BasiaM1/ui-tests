@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
-import static com.basia.config.YamlParser.getConfig;
 import static com.basia.providers.UserProvider.getRandomUser;
 
 public class LoginTest extends BaseTest {
@@ -23,7 +22,8 @@ public class LoginTest extends BaseTest {
     private ApiDeleteUser apiDeleteUser;
 
     String token;
-    RegisterDto randomUser;
+    RegisterDto randomUser = getRandomUser();
+
     @AfterClass
     public void cleanUp() {
         apiDeleteUser.deleteUser(randomUser.getUsername(), token);
@@ -32,7 +32,7 @@ public class LoginTest extends BaseTest {
     @Test
     public void shouldBeAbleToLoginAsAdmin() {
         loginPage
-                .attemptLogin(getConfig().getAdminUsername(), getConfig().getAdminPassword(), HomePage.class)
+                .attemptLogin(config.getAdminUsername(), config.getAdminPassword(), HomePage.class)
                 .verifyHeaderContains("Slawomir");
     }
 

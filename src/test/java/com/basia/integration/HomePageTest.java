@@ -4,11 +4,11 @@ import com.basia.api.ApiDeleteUser;
 import com.basia.api.ApiGetAllUsers;
 import com.basia.api.ApiRegister;
 import com.basia.api.dto.register.RegisterDto;
-import com.basia.config.YamlParser;
 import com.basia.pages.HomePage;
 import com.basia.utils.LoginUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -20,6 +20,9 @@ public class HomePageTest extends BaseTest {
     private final RegisterDto user = getRandomUser();
     private final RegisterDto user1 = getRandomUser();
     private final RegisterDto user2 = getRandomUser();
+
+    @Value("${url}")
+    private String baseUrl;
     @Autowired
     private ApiGetAllUsers apiGetAllUsers;
     @Autowired
@@ -43,7 +46,7 @@ public class HomePageTest extends BaseTest {
 
     @Test
     public void shouldBeOnHomePageAndGetAllUsers() {
-        driver.navigate().to(YamlParser.getConfig().getUrl());
+        driver.navigate().to(baseUrl);
 
         int usersCount = apiGetAllUsers.getAllUsers(token).size();
 
@@ -58,7 +61,7 @@ public class HomePageTest extends BaseTest {
         apiRegister.register(user1);
         apiRegister.register(user2);
 
-        driver.navigate().to(YamlParser.getConfig().getUrl());
+        driver.navigate().to(baseUrl);
 
         int defaultUsersSizeAndLogged = 3;
 

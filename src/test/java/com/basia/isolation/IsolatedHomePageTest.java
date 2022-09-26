@@ -3,7 +3,6 @@ package com.basia.isolation;
 import com.basia.api.dto.login.LoginResponseDto;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.userdetails.UserDetailsDto;
-import com.basia.config.YamlParser;
 import com.basia.pages.HomePage;
 import com.basia.routes.DeleteUserRoute;
 import lombok.SneakyThrows;
@@ -41,7 +40,7 @@ public class IsolatedHomePageTest extends IsolatedBaseTest {
         setCookie(driver, loginResponseDto.getToken());
         setLocalStorage(driver, loginResponseDto);
         mockGetUsers();
-        driver.navigate().to(YamlParser.getConfig().getUrl());
+        driver.navigate().to(config.getUrl());
     }
 
     @SneakyThrows

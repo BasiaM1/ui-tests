@@ -1,8 +1,8 @@
 package com.basia.isolation;
 
 import com.basia.api.dto.userdetails.UserDetailsDto;
+import com.basia.config.LocalConfig;
 import com.basia.pages.LoginPage;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -13,6 +13,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.devtools.DevTools;
 import org.openqa.selenium.devtools.HasDevTools;
 import org.openqa.selenium.remote.Augmenter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -20,10 +21,12 @@ import org.testng.annotations.BeforeMethod;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static com.basia.config.YamlParser.getConfig;
 import static org.apache.commons.io.IOUtils.resourceToString;
 
 public abstract class IsolatedBaseTest {
+
+    @Autowired
+    protected LocalConfig config;
 
     public static final String USERS_AS_STRING = loadFile("/users.json");
 
@@ -61,7 +64,7 @@ public abstract class IsolatedBaseTest {
     }
 
     private LoginPage goToPage() {
-        driver.navigate().to(getConfig().getUrl());
+        driver.navigate().to(config.getUrl());
         loginPage = new LoginPage(driver);
 
         return loginPage;
