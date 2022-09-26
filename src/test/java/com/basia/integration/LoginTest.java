@@ -7,6 +7,7 @@ import com.basia.api.dto.register.RegisterResponseDto;
 import com.basia.helpers.ConstValues;
 import com.basia.pages.HomePage;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
@@ -15,7 +16,11 @@ import static com.basia.providers.UserProvider.getRandomUser;
 
 public class LoginTest extends BaseTest {
 
-    private final ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
+    @Autowired
+    private ApiRegister apiRegister;
+
+    @Autowired
+    private ApiDeleteUser apiDeleteUser;
 
     String token;
     RegisterDto randomUser;
@@ -34,7 +39,6 @@ public class LoginTest extends BaseTest {
     @SneakyThrows
     @Test
     public void shouldBeAbleToLoginAsNewlyGeneratedUser() {
-        ApiRegister apiRegister = new ApiRegister();
         randomUser = getRandomUser();
         RegisterResponseDto registerUser = apiRegister.register(randomUser);
         token = registerUser.getToken();

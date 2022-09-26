@@ -6,27 +6,34 @@ import com.basia.api.ApiRegister;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.config.YamlParser;
 import com.basia.pages.HomePage;
+import com.basia.utils.LoginUtil;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static com.basia.providers.UserProvider.getRandomUser;
-import static com.basia.utils.LoginUtil.loginAsRandomUser;
 
 public class HomePageTest extends BaseTest {
 
     private final RegisterDto user = getRandomUser();
     private final RegisterDto user1 = getRandomUser();
     private final RegisterDto user2 = getRandomUser();
-    private final ApiGetAllUsers apiGetAllUsers = new ApiGetAllUsers();
-    private final ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
+    @Autowired
+    private ApiGetAllUsers apiGetAllUsers;
+    @Autowired
+    private ApiDeleteUser apiDeleteUser;
+    @Autowired
+    private ApiRegister apiRegister;
+    @Autowired
+    private LoginUtil loginUtil;
 
     private String token;
 
     @BeforeMethod
     public void login() {
-        token = loginAsRandomUser(user, driver);
+        token = loginUtil.loginAsRandomUser(user, driver);
     }
 
     @AfterMethod
@@ -48,7 +55,6 @@ public class HomePageTest extends BaseTest {
     @SneakyThrows
     @Test
     public void shouldBeAbleToDeleteUsers() {
-        ApiRegister apiRegister = new ApiRegister();
         apiRegister.register(user1);
         apiRegister.register(user2);
 

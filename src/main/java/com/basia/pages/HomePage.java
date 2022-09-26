@@ -62,7 +62,7 @@ public class HomePage extends AbstractPage {
         alert.accept();
     }
 
-    private static boolean filterOutUsers(String loggedUserName, WebElement el) {
+    private boolean filterOutUsers(String loggedUserName, WebElement el) {
         return !el.getText().contains("Slawomir") && !el.getText().contains("Gosia") && !el.getText().contains(loggedUserName);
     }
 }

@@ -5,10 +5,12 @@ import com.basia.api.dto.login.LoginResponseDto;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import static io.restassured.RestAssured.given;
 
 
+@Component
 @Slf4j
 public class ApiLogin extends AbstractApi {
 

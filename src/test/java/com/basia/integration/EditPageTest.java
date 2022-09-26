@@ -9,8 +9,10 @@ import com.basia.enums.InputFields;
 import com.basia.pages.EditPage;
 import com.basia.pages.EditPageValidator;
 import com.basia.pages.HomePage;
+import com.basia.utils.LoginUtil;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -18,20 +20,22 @@ import org.testng.annotations.Test;
 import static com.basia.enums.InputFields.FIRST_NAME;
 import static com.basia.enums.InputFields.LAST_NAME;
 import static com.basia.providers.UserProvider.getRandomUser;
-import static com.basia.utils.LoginUtil.loginAsRandomUser;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class EditPageTest extends BaseTest {
 
     private final RegisterDto user = getRandomUser();
-    private final ApiUserDetails apiUserDetails = new ApiUserDetails();
-
-    private final ApiDeleteUser apiDeleteUser = new ApiDeleteUser();
+    @Autowired
+    private ApiUserDetails apiUserDetails;
+    @Autowired
+    private ApiDeleteUser apiDeleteUser;
+    @Autowired
+    private LoginUtil loginUtil;
     private String token;
 
     @BeforeMethod
     private void goToHomePageAsRandomUser() {
-        token = loginAsRandomUser(user, driver);
+        token = loginUtil.loginAsRandomUser(user, driver);
     }
 
     @AfterMethod

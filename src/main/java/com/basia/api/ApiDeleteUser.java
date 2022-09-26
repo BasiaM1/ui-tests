@@ -3,9 +3,11 @@ package com.basia.api;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import static io.restassured.RestAssured.given;
 
+@Component
 @Slf4j
 public class ApiDeleteUser extends AbstractApi {
 

@@ -7,11 +7,13 @@ import io.restassured.http.Header;
 import io.restassured.response.Response;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
+@Component
 @Slf4j
 public class ApiGetAllUsers extends AbstractApi {
 
