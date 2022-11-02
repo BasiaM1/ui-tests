@@ -1,6 +1,7 @@
 package com.basia.pages.register;
 
 import com.basia.api.dto.register.RegisterDto;
+import com.basia.config.LocalDriverManager;
 import com.basia.pages.AbstractPage;
 import com.basia.pages.LoginPage;
 import lombok.Getter;
@@ -49,8 +50,8 @@ public class RegisterPage extends AbstractPage {
         return driver.findElement(errorMessageXpath);
     }
 
-    public RegisterPage(WebDriver driver) {
-        super(driver);
+    public RegisterPage(LocalDriverManager localDriverManager) {
+        super(localDriverManager);
     }
     @SneakyThrows
     public <T extends AbstractPage> T attemptRegister(RegisterDto user, Class<T> expectedPage) {
@@ -60,7 +61,7 @@ public class RegisterPage extends AbstractPage {
         passwordField.sendKeys(user.getPassword());
         emailField.sendKeys(user.getEmail());
         registerButton.click();
-        return expectedPage.getDeclaredConstructor(WebDriver.class).newInstance(driver);
+        return expectedPage.getDeclaredConstructor(LocalDriverManager.class).newInstance(localDriverManager);
     }
 
     public LoginPage attemptRegister(RegisterDto user) {
@@ -72,7 +73,7 @@ public class RegisterPage extends AbstractPage {
         registerButton.click();
 
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("h2"), "Login"));
-        return new LoginPage(getDriver());
+        return new LoginPage(localDriverManager);
     }
 
     public void verifyAlertMessageContains(String text) {

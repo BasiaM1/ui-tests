@@ -26,7 +26,7 @@ public class RegisterTest extends BaseTest {
 
     @BeforeMethod
     private void setUpPageAndValidator() {
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage(localDriverManager);
     }
 
     @AfterClass
@@ -75,7 +75,7 @@ public class RegisterTest extends BaseTest {
 
     @SneakyThrows
     private String getTokenForLoggedUser() {
-        LocalStorage local = ((WebStorage) driver).getLocalStorage();
+        LocalStorage local = ((WebStorage) localDriverManager.getDriver()).getLocalStorage();
         String userDetails = local.getItem("user");
         ObjectMapper mapper = new ObjectMapper();
         LoginResponseDto loginResponseDto = mapper.readValue(userDetails, LoginResponseDto.class);

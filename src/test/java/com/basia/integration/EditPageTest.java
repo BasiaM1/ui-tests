@@ -21,7 +21,7 @@ public class EditPageTest extends BaseTest {
 
     @BeforeMethod
     private void goToHomePageAsRandomUser() {
-        token = loginUtil.loginAsRandomUser(user, driver);
+        token = loginUtil.loginAsRandomUser(user, localDriverManager.getDriver());
     }
 
     @AfterMethod
@@ -32,7 +32,7 @@ public class EditPageTest extends BaseTest {
     @SneakyThrows
     @Test
     public void shouldBeAbleToSeeCorrectEditPage() {
-        driver.navigate().to(config.getUrl());
+        localDriverManager.getDriver().navigate().to(config.getUrl());
 
         homePage.goToEditUserDetails(user.getFirstName(), user.getLastName());
 

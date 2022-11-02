@@ -22,7 +22,7 @@ public class HomePageTest extends BaseTest {
 
     @BeforeMethod
     public void login() {
-        token = loginUtil.loginAsRandomUser(user, driver);
+        token = loginUtil.loginAsRandomUser(user, localDriverManager.getDriver());
     }
 
     @AfterMethod
@@ -32,11 +32,11 @@ public class HomePageTest extends BaseTest {
 
     @Test
     public void shouldBeOnHomePageAndGetAllUsers() {
-        driver.navigate().to(baseUrl);
+        localDriverManager.getDriver().navigate().to(baseUrl);
 
         int usersCount = apiGetAllUsers.getAllUsers(token).size();
 
-        new HomePage(driver)
+        new HomePage(localDriverManager)
                 .verifyHeaderContains(user.getFirstName())
                 .verifyUserCount(usersCount);
     }
@@ -47,7 +47,7 @@ public class HomePageTest extends BaseTest {
         apiRegister.register(user1);
         apiRegister.register(user2);
 
-        driver.navigate().to(baseUrl);
+        localDriverManager.getDriver().navigate().to(baseUrl);
 
         int defaultUsersSizeAndLogged = 3;
 

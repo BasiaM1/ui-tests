@@ -6,13 +6,12 @@ import com.basia.api.ApiRegister;
 import com.basia.api.ApiUserDetails;
 import com.basia.config.LocalConfig;
 import com.basia.config.SpringConfig;
+import com.basia.config.LocalDriverManager;
 import com.basia.pages.EditPage;
 import com.basia.pages.EditPageValidator;
 import com.basia.pages.HomePage;
 import com.basia.pages.LoginPage;
 import com.basia.utils.LoginUtil;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +19,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 @SpringBootTest
@@ -29,7 +27,7 @@ import org.testng.annotations.BeforeMethod;
 public abstract class BaseTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
-    protected WebDriver driver;
+    protected LocalDriverManager localDriverManager;
 
     @Autowired
     protected LocalConfig config;
@@ -52,10 +50,10 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests {
     @Autowired
     protected LoginPage loginPage;
 
-    @BeforeClass
-    static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
+//    @BeforeClass
+//    static void setupClass() {
+//        WebDriverManager.chromedriver().setup();
+//    }
 
     @BeforeMethod
     protected void setupTest() {
@@ -64,13 +62,14 @@ public abstract class BaseTest extends AbstractTestNGSpringContextTests {
 
     @AfterMethod
     void teardown() {
-        if (driver != null) {
-            driver.quit();
+        if (localDriverManager.getDriver() != null) {
+            localDriverManager.getDriver().quit();
+            localDriverManager.invalidateDriver();
         }
     }
 
     private void goToPage() {
-        driver.navigate().to(config.getUrl());
+        localDriverManager.getDriver().navigate().to(config.getUrl());
     }
 
 }

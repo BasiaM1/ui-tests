@@ -1,5 +1,7 @@
 package com.basia.pages;
 
+import com.basia.config.LocalDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Getter;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -23,8 +25,8 @@ public class HomePage extends AbstractPage {
     @FindBy(css = "ul li")
     private List<WebElement> users;
 
-    public HomePage(WebDriver driver) {
-        super(driver);
+    public HomePage(LocalDriverManager localDriverManager) {
+        super(localDriverManager);
     }
 
     private WebElement editButton(String firstName, String lastName) {
@@ -51,12 +53,12 @@ public class HomePage extends AbstractPage {
 
     public EditPage goToEditUserDetails(String firstName, String lastName) {
         editButton(firstName, lastName).click();
-        return new EditPage(getDriver());
+        return new EditPage(localDriverManager);
     }
 
     public EditPage goToEditUserDetails1() {
         editButton1().click();
-        return new EditPage(getDriver());
+        return new EditPage(localDriverManager);
     }
 
     public HomePage deleteAllUsersWithoutDefault(String loggedUserName) {

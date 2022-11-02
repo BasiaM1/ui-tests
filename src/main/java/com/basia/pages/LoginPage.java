@@ -1,5 +1,6 @@
 package com.basia.pages;
 
+import com.basia.config.LocalDriverManager;
 import com.basia.pages.register.RegisterPage;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -29,8 +30,8 @@ public class LoginPage extends AbstractPage {
     @FindBy(className = "alert")
     private WebElement alert;
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    public LoginPage(LocalDriverManager localDriverManager) {
+        super(localDriverManager);
     }
 
     @SneakyThrows
@@ -38,7 +39,7 @@ public class LoginPage extends AbstractPage {
         usernameField.sendKeys(username);
         passwordField.sendKeys(password);
         loginButton.click();
-        return expectedPage.getDeclaredConstructor(WebDriver.class).newInstance(driver);
+        return expectedPage.getDeclaredConstructor(LocalDriverManager.class).newInstance(localDriverManager);
     }
 
     public LoginPage attemptLogin(String username, String password) {
@@ -58,6 +59,6 @@ public class LoginPage extends AbstractPage {
 
         wait.until(ExpectedConditions.textToBePresentInElementLocated(By.cssSelector("h2"), "Register"));
 
-        return new RegisterPage(getDriver());
+        return new RegisterPage(localDriverManager);
     }
 }

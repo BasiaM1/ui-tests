@@ -1,11 +1,15 @@
 package com.basia.pages;
 
+import com.basia.config.LocalDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.Getter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 @Getter
@@ -24,8 +28,8 @@ public class EditPage extends AbstractPage {
         return driver.findElement(By.xpath(String.format("//label[text()='%s']/following-sibling::input", label)));
     }
 
-    public EditPage(WebDriver driver) {
-        super(driver);
+    public EditPage(LocalDriverManager localDriverManager) {
+        super(localDriverManager);
     }
 
     public void editUserDetails(String label, String value){
