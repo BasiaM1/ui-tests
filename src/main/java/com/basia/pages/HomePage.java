@@ -1,5 +1,6 @@
 package com.basia.pages;
 
+import lombok.Getter;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -13,6 +14,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Component
+@Getter
 public class HomePage extends AbstractPage {
 
     @FindBy(css = "h1")
@@ -28,6 +30,10 @@ public class HomePage extends AbstractPage {
     private WebElement editButton(String firstName, String lastName) {
         return driver.findElement(By.xpath(String.format("//ul//li[text()='%s']/span/a[contains(@class, 'edit')]",
                 String.format("%s %s", firstName, lastName))));
+    }
+    private WebElement editButton1() {
+        List<WebElement> edit = driver.findElements(By.className("edit"));
+        return edit.get(edit.size()-1);
     }
 
     private WebElement deleteButton(String fullName) {
@@ -45,6 +51,11 @@ public class HomePage extends AbstractPage {
 
     public EditPage goToEditUserDetails(String firstName, String lastName) {
         editButton(firstName, lastName).click();
+        return new EditPage(getDriver());
+    }
+
+    public EditPage goToEditUserDetails1() {
+        editButton1().click();
         return new EditPage(getDriver());
     }
 

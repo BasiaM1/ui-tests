@@ -16,7 +16,6 @@ import static io.restassured.RestAssured.given;
 public class ApiRegister extends AbstractApi {
 
     public RegisterResponseDto register(RegisterDto registerDto) throws IOException {
-
         Response response = given().body(registerDto).contentType(ContentType.JSON)
                 .when().post("http://localhost:4001/users/signup");
 

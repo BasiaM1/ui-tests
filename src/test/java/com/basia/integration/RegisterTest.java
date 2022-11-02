@@ -1,6 +1,5 @@
 package com.basia.integration;
 
-import com.basia.api.ApiDeleteUser;
 import com.basia.api.dto.login.LoginResponseDto;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.enums.InputFields;
@@ -14,16 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.openqa.selenium.html5.LocalStorage;
 import org.openqa.selenium.html5.WebStorage;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class RegisterTest extends BaseTest {
 
-    @Autowired
-    private ApiDeleteUser apiDeleteUser;
-    LoginPage loginPage;
     RegisterPage registerPage;
     RegisterPageValidator validator;
     RegisterDto newUser;

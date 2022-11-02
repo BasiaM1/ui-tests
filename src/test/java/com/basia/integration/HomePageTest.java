@@ -1,13 +1,8 @@
 package com.basia.integration;
 
-import com.basia.api.ApiDeleteUser;
-import com.basia.api.ApiGetAllUsers;
-import com.basia.api.ApiRegister;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.pages.HomePage;
-import com.basia.utils.LoginUtil;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -23,17 +18,6 @@ public class HomePageTest extends BaseTest {
 
     @Value("${url}")
     private String baseUrl;
-    @Autowired
-    private ApiGetAllUsers apiGetAllUsers;
-    @Autowired
-    private ApiDeleteUser apiDeleteUser;
-    @Autowired
-    private ApiRegister apiRegister;
-    @Autowired
-    private LoginUtil loginUtil;
-    @Autowired
-    private HomePage homePage;
-
     private String token;
 
     @BeforeMethod

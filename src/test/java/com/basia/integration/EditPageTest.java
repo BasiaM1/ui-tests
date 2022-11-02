@@ -1,17 +1,10 @@
 package com.basia.integration;
 
-import com.basia.api.ApiDeleteUser;
-import com.basia.api.ApiUserDetails;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.userdetails.UserDetailsDto;
 import com.basia.enums.InputFields;
-import com.basia.pages.EditPage;
-import com.basia.pages.EditPageValidator;
-import com.basia.pages.HomePage;
-import com.basia.utils.LoginUtil;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -24,18 +17,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EditPageTest extends BaseTest {
 
     private final RegisterDto user = getRandomUser();
-    @Autowired
-    private ApiUserDetails apiUserDetails;
-    @Autowired
-    private ApiDeleteUser apiDeleteUser;
-    @Autowired
-    private LoginUtil loginUtil;
-    @Autowired
-    private HomePage homePage;
-    @Autowired
-    private EditPageValidator editPageValidator;
-    @Autowired
-    private EditPage editPage;
     private String token;
 
     @BeforeMethod
@@ -47,6 +28,7 @@ public class EditPageTest extends BaseTest {
     public void cleanUp() {
         apiDeleteUser.deleteUser(user.getUsername(), token);
     }
+
     @SneakyThrows
     @Test
     public void shouldBeAbleToSeeCorrectEditPage() {

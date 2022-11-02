@@ -21,7 +21,7 @@
     "lastName": "Radzyminska"
   },
   {
-    "id": 1,
+    "id": 3,
     "username": "admin2",
     "email": "admin@email.com",
     "roles": [
@@ -32,13 +32,55 @@
     "lastName": "Radzyminski2"
   },
   {
-    "id": 2,
+    "id": 4,
     "username": "client2",
     "email": "client@email.com",
     "roles": [
       "ROLE_CLIENT"
     ],
     "firstName": "Janina",
+    "lastName": "Radzyminska2"
+  },
+  {
+    "id": 5,
+    "username": "admin3",
+    "email": "admin@email.com",
+    "roles": [
+      "ROLE_ADMIN",
+      "ROLE_CLIENT"
+    ],
+    "firstName": "Slawek",
+    "lastName": "Radzyminski"
+  },
+  {
+    "id": 6,
+    "username": "client3",
+    "email": "client@email.com",
+    "roles": [
+      "ROLE_CLIENT"
+    ],
+    "firstName": "Malgorzata",
+    "lastName": "Radzyminska"
+  },
+  {
+    "id": 7,
+    "username": "admin4",
+    "email": "admin@email.com",
+    "roles": [
+      "ROLE_ADMIN",
+      "ROLE_CLIENT"
+    ],
+    "firstName": "Janek",
+    "lastName": "Radzyminski2"
+  },
+  {
+    "id": 8,
+    "username": "client4",
+    "email": "client@email.com",
+    "roles": [
+      "ROLE_CLIENT"
+    ],
+    "firstName": "Katarzyna",
     "lastName": "Radzyminska2"
   }
 ]

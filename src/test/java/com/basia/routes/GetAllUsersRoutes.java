@@ -1,5 +1,6 @@
 package com.basia.routes;
 
+import com.basia.api.dto.userdetails.UserDetailsDto;
 import com.google.common.net.MediaType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,13 @@ public class GetAllUsersRoutes {
                                 .setContent(utf8String(USERS_AS_STRING)));
     }
 
+    public static Route successfulGetAllUsersRouteWithLoggedUser(UserDetailsDto userDetails) {
+        return Route.matching(req -> req.getUri().endsWith("/users"))
+                .to(() -> req ->
+                        new HttpResponse()
+                                .setStatus(200)
+                                .addHeader("Content-Type", MediaType.JSON_UTF_8.toString())
+                                .setContent(utf8String(USERS_AS_STRING.substring(0,USERS_AS_STRING.length()-1)+",{\r\n\"id\": "+userDetails.getId()+",\r\n\"username\": \""+userDetails.getUsername()+
+                                                "\",\r\n\"email\": \"" +userDetails.getEmail()+ "\",\"roles\": [\r\n\""+ userDetails.getRoles()[0]+"\",\r\n\""+userDetails.getRoles()[1]+"\"\r\n],\r\n\"firstName\": \""+userDetails.getFirstName()+ "\",\r\n\"lastName\": \""+userDetails.getLastName()+ "\"\r\n}\r\n]")));
+    }
 }

@@ -1,29 +1,16 @@
 package com.basia.integration;
 
-import com.basia.api.ApiDeleteUser;
-import com.basia.api.ApiRegister;
 import com.basia.api.dto.register.RegisterDto;
 import com.basia.api.dto.register.RegisterResponseDto;
 import com.basia.helpers.ConstValues;
 import com.basia.pages.HomePage;
-import com.basia.pages.LoginPage;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 
 import static com.basia.providers.UserProvider.getRandomUser;
 
 public class LoginTest extends BaseTest {
-
-    @Autowired
-    private ApiRegister apiRegister;
-
-    @Autowired
-    private ApiDeleteUser apiDeleteUser;
-
-    @Autowired
-    private LoginPage loginPage;
 
     String token;
     RegisterDto randomUser = getRandomUser();

@@ -29,7 +29,7 @@ public class SpringConfig {
 
     @Bean
     public WebDriver webDriver() {
-        System.setProperty("webdriver.chrome.driver","/Users/ocado/Downloads/chromedriver");
+        System.setProperty("webdriver.chrome.driver","/Users/bmurzynowska/Downloads/chromedriver.exe");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-web-security");
         WebDriver driver = new ChromeDriver(chromeOptions);

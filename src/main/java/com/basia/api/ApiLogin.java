@@ -9,13 +9,11 @@ import org.springframework.stereotype.Component;
 
 import static io.restassured.RestAssured.given;
 
-
 @Component
 @Slf4j
 public class ApiLogin extends AbstractApi {
 
     public LoginResponseDto login(LoginDto loginDto) {
-
         Response response = given().contentType(ContentType.JSON).body(loginDto)
                 .when()
                 .post("http://localhost:4001/users/signin");
