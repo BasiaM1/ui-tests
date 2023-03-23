@@ -20,6 +20,7 @@ public class DuckDuckGoTest {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
+        options.addArguments("--remote-allow-origins=*");
         driver = new ChromeDriver(options);
         driver.get("https://www.google.com");
         WebElement searchBox = driver.findElement(By.name("q"));
